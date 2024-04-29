@@ -1,5 +1,6 @@
 package interfaces;
 
+import dao.UsuarioDao;
 import javax.swing.JOptionPane;
 import model.Usuario;
 
@@ -149,7 +150,9 @@ public class TelaUsuario extends javax.swing.JFrame {
             usuario.setCelular(txtCelular.getText());
             usuario.setEmail(txtEmail.getText());
             usuario.setSenha(senha);
-            
+            UsuarioDao dao = new UsuarioDao();
+            dao.adicionaUsuario(usuario);
+            JOptionPane.showMessageDialog(rootPane, "Usuario adicionado com sucesso");
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

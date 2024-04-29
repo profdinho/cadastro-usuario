@@ -55,4 +55,24 @@ public class UsuarioDao {
             throw new RuntimeException(e);
         }
     }
+    
+    public Usuario getUsuario(String nome) {
+        Usuario usuario = new Usuario();
+        try {
+            String sql = "SELECT * FROM Usuario WHERE nome LIKE '%" + nome + "%'";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                usuario.setNome(rs.getString("nome"));
+                usuario.setCelular(rs.getString("celular"));
+                usuario.setEmail(rs.getString("email"));
+            }
+            rs.close();
+            ps.close();
+            return usuario;
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
