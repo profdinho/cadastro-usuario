@@ -59,8 +59,9 @@ public class UsuarioDao {
     public Usuario getUsuario(String nome) {
         Usuario usuario = new Usuario();
         try {
-            String sql = "SELECT * FROM Usuario WHERE nome LIKE '%" + nome + "%'";
+            String sql = "SELECT * FROM Usuario WHERE nome LIKE ?";
             PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, "%" + nome + "%");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 usuario.setNome(rs.getString("nome"));
@@ -75,4 +76,36 @@ public class UsuarioDao {
             throw new RuntimeException(e);
         }
     }
+    
+    public void alteraUsuario (Usuario usuario) {
+        String sql = "UPDATE usuario SET nome=?, celular=?, email=?, senha=?" +
+                    " WHERE id=?";
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, usuario.getNome());
+            ps.setString(2, usuario.getCelular());
+            ps.setString(3, usuario.getEmail());
+            ps.setString(4, usuario.getSenha());
+            ps.setLong(5, usuario.getId());
+            ps.execute();
+            ps.close();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+	
+    public void removeUsuario (Usuario usuario) {
+        try {
+            PreparedStatement ps = conexao.prepareStatement("DELETE" +
+                            "FROM usuario WHERE id=?");
+            ps.setLong(1, usuario.getId());
+            ps.execute();
+            ps.close();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

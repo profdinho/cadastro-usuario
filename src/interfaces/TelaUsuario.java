@@ -2,6 +2,7 @@ package interfaces;
 
 import dao.UsuarioDao;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import model.Usuario;
 
 public class TelaUsuario extends javax.swing.JFrame {
@@ -34,8 +35,14 @@ public class TelaUsuario extends javax.swing.JFrame {
         txtConfirme = new javax.swing.JPasswordField();
         txtCelular = new javax.swing.JFormattedTextField();
         btnCadastrar = new javax.swing.JButton();
+        btnFechar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder("Usuário"));
 
@@ -109,6 +116,13 @@ public class TelaUsuario extends javax.swing.JFrame {
             }
         });
 
+        btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,7 +133,9 @@ public class TelaUsuario extends javax.swing.JFrame {
                     .addComponent(pnlUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,7 +144,9 @@ public class TelaUsuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCadastrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrar)
+                    .addComponent(btnFechar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -153,8 +171,25 @@ public class TelaUsuario extends javax.swing.JFrame {
             UsuarioDao dao = new UsuarioDao();
             dao.adicionaUsuario(usuario);
             JOptionPane.showMessageDialog(rootPane, "Usuario adicionado com sucesso");
+            new TelaLogin().setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        int resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja sair do cadastro?");
+        if (resposta == 0) {
+            new TelaLogin().setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja sair do sistema?");
+        if (resposta == 0) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -193,6 +228,7 @@ public class TelaUsuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnFechar;
     private javax.swing.JLabel lblCelular;
     private javax.swing.JLabel lblConfirme;
     private javax.swing.JLabel lblEmail;
