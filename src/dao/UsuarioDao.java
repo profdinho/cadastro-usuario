@@ -1,11 +1,13 @@
 package dao;
 
+import interfaces.TelaUsuario;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import jdbc.ConexaoBD;
 import model.Usuario;
 
@@ -28,6 +30,25 @@ public class UsuarioDao {
             ps.setString(4, usuario.getSenha());
             ps.execute();
             ps.close();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public boolean login(String usuario, String senha) {
+        String sql = "SELECT * FROM Usuario WHERE nome = ? AND senha = ?";
+        try {
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setString(1, usuario);
+            ps.setString(2, senha);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
         catch (SQLException e) {
             throw new RuntimeException(e);

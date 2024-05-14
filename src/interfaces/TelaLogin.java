@@ -4,6 +4,14 @@
  */
 package interfaces;
 
+import dao.UsuarioDao;
+import jdbc.ConexaoBD;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author dinho
@@ -79,6 +87,11 @@ public class TelaLogin extends javax.swing.JFrame {
         });
 
         btnLogar.setText("Logar");
+        btnLogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,6 +127,20 @@ public class TelaLogin extends javax.swing.JFrame {
         new TelaUsuario().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogarActionPerformed
+        String usuario, senha;
+        usuario = txtUsuario.getText();
+        senha = new String(txtSenha.getPassword());
+        UsuarioDao dao = new UsuarioDao();
+        if (dao.login(usuario, senha)) {
+            new TelaUsuario().setVisible(true);
+            this.dispose();
+        }
+        else {
+            JOptionPane.showMessageDialog(rootPane, "Usuário e/ou senha inválido!");
+        }
+    }//GEN-LAST:event_btnLogarActionPerformed
 
     /**
      * @param args the command line arguments
