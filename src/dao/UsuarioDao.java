@@ -1,18 +1,16 @@
 package dao;
 
-import interfaces.TelaUsuario;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import jdbc.ConexaoBD;
 import model.Usuario;
 
 public class UsuarioDao {
-    private Connection conexao;
+    private final Connection conexao;
     
     public UsuarioDao() {
             this.conexao = new ConexaoBD().getConnection();
@@ -63,6 +61,7 @@ public class UsuarioDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setCelular(rs.getString("celular"));
                 usuario.setEmail(rs.getString("email"));
@@ -71,6 +70,29 @@ public class UsuarioDao {
             rs.close();
             ps.close();
             return usuarios;
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public Usuario getUsuarioById(Integer id) {
+        Usuario usuario = new Usuario();
+        try {
+            String sql = "SELECT * FROM Usuario WHERE id = ?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                usuario.setId(rs.getInt("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setCelular(rs.getString("celular"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
+            }
+            rs.close();
+            ps.close();
+            return usuario;
         }
         catch (SQLException e) {
             throw new RuntimeException(e);

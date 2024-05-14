@@ -5,11 +5,6 @@
 package interfaces;
 
 import dao.UsuarioDao;
-import jdbc.ConexaoBD;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -134,7 +129,7 @@ public class TelaLogin extends javax.swing.JFrame {
         senha = new String(txtSenha.getPassword());
         UsuarioDao dao = new UsuarioDao();
         if (dao.login(usuario, senha)) {
-            new TelaUsuario().setVisible(true);
+            new TelaPrincipal().setVisible(true);
             this.dispose();
         }
         else {
