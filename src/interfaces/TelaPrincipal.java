@@ -103,6 +103,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,16 +143,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        //JOptionPane.showMessageDialog(rootPane, "Teste");
-        UsuarioDao dao = new UsuarioDao();
-        for (Usuario usuario : dao.getLista()) {
-            DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
-            Integer id = usuario.getId();
-            String nome = usuario.getNome();
-            String celular = usuario.getCelular();
-            String email = usuario.getEmail();
-            model.addRow(new Object[]{id, nome, celular, email});
-        }
+        atualizaTabela();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
@@ -167,6 +163,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (tblUsuarios.getSelectedRowCount() == 1) {
+            Integer row = tblUsuarios.getSelectedRow();
+            Integer id = Integer.valueOf(tblUsuarios.getValueAt(row, 0).toString());
+            Integer resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja realmente excluir?");
+            if (resposta == 0) {
+                UsuarioDao dao = new UsuarioDao();
+                dao.removeUsuario(id);
+                JOptionPane.showMessageDialog(rootPane, "Usuário removido com sucesso!");
+                DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
+                model.removeRow(row);
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(rootPane, "Por favor, selecione uma linha!");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void atualizaTabela() {
+        UsuarioDao dao = new UsuarioDao();
+        for (Usuario usuario : dao.getLista()) {
+            DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
+            Integer id = usuario.getId();
+            String nome = usuario.getNome();
+            String celular = usuario.getCelular();
+            String email = usuario.getEmail();
+            model.addRow(new Object[]{id, nome, celular, email});
+        }
+    }
     /**
      * @param args the command line arguments
      */

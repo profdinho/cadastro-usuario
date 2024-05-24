@@ -6,7 +6,8 @@
             <file>file:/C:/Users/dinho/OneDrive/Documentos/NetBeansProjects/CadastroUsuario/src/jdbc/ConexaoBD.java</file>
             <file>file:/C:/Users/dinho/OneDrive/Documentos/NetBeansProjects/CadastroUsuario/src/dao/UsuarioDao.java</file>
             <file>file:/C:/Users/dinho/OneDrive/Documentos/NetBeansProjects/CadastroUsuario/src/interfaces/TelaUsuario.java</file>
-            <file>file:/C:/Users/dinho/OneDrive/Documentos/NetBeansProjects/CadastroUsuario/src/teste/TestaConexao.java</file>
+            <file>file:/C:/Users/dinho/OneDrive/Documentos/NetBeansProjects/CadastroUsuario/src/interfaces/TelaPrincipal.java</file>
+            <file>file:/C:/Users/dinho/OneDrive/Documentos/NetBeansProjects/CadastroUsuario/src/teste/TestaUsuario.java</file>
             <file>file:/C:/Users/dinho/OneDrive/Documentos/NetBeansProjects/CadastroUsuario/src/model/Usuario.java</file>
             <file>file:/C:/Users/dinho/OneDrive/Documentos/NetBeansProjects/CadastroUsuario/src/interfaces/TelaLogin.java</file>
         </group>

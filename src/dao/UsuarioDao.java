@@ -99,7 +99,7 @@ public class UsuarioDao {
         }
     }
     
-    public Usuario getUsuario(String nome) {
+    public Usuario getUsuarioByNome(String nome) {
         Usuario usuario = new Usuario();
         try {
             String sql = "SELECT * FROM Usuario WHERE nome LIKE ?";
@@ -138,11 +138,11 @@ public class UsuarioDao {
         }
     }
 	
-    public void removeUsuario (Usuario usuario) {
+    public void removeUsuario (Integer id) {
         try {
-            PreparedStatement ps = conexao.prepareStatement("DELETE" +
-                            "FROM usuario WHERE id=?");
-            ps.setLong(1, usuario.getId());
+            String sql = "DELETE FROM usuario WHERE id=?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setLong(1, id);
             ps.execute();
             ps.close();
         }
